@@ -15,6 +15,7 @@ class CategoryGridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final itemColorScheme = ColorScheme.fromSeed(seedColor: category.color);
+
     return InkWell(
       // GestureDetector will suffice but won't a visual give feedback.
       onTap: onSelectCategory,
@@ -35,7 +36,7 @@ class CategoryGridItem extends StatelessWidget {
         child: Text(
           category.title,
           style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                color: itemColorScheme.onSurface,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
         ),
       ),
