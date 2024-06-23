@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meals/screens/tabs.dart';
 
-final lightColorScheme = ColorScheme.fromSeed(
+final kColorScheme = ColorScheme.fromSeed(
   seedColor: const Color.fromARGB(255, 174, 108, 15),
 );
 
-final darkColorScheme = ColorScheme.fromSeed(
+final kDarkColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
   seedColor: const Color.fromARGB(255, 131, 57, 0),
 );
@@ -25,17 +25,17 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: lightColorScheme,
+        colorScheme: kColorScheme,
         appBarTheme: const AppBarTheme().copyWith(
-          color: lightColorScheme.onSecondary,
+          color: kColorScheme.onSecondary,
         ),
         textTheme: GoogleFonts.latoTextTheme(),
       ),
       darkTheme: ThemeData(
         useMaterial3: true,
-        colorScheme: darkColorScheme,
+        colorScheme: kDarkColorScheme,
         appBarTheme: const AppBarTheme().copyWith(
-          color: darkColorScheme.onSecondary,
+          color: kDarkColorScheme.onSecondary,
         ),
         textTheme: GoogleFonts.latoTextTheme(),
       ),
