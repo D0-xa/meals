@@ -26,6 +26,7 @@ class _TabsScreenState extends State<TabsScreen> {
   final List<Meal> _favouriteMeals = [];
   Map<Filter, bool> _selectedFilters = kInitialFilters;
   var _selectedMeals = dummyMeals;
+  int _selectedTile = 0;
 
   void _showInfoMessage(String message) {
     ScaffoldMessenger.of(context).clearSnackBars();
@@ -33,7 +34,7 @@ class _TabsScreenState extends State<TabsScreen> {
       SnackBar(
         content: Text(message),
         behavior: SnackBarBehavior.floating,
-        margin: const EdgeInsets.all(5),
+        margin: const EdgeInsets.all(16),
         showCloseIcon: true,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5),
@@ -68,17 +69,20 @@ class _TabsScreenState extends State<TabsScreen> {
     Navigator.of(context).pop();
 
     if (identifier == 'Filters') {
+      _selectedTile = 1;
       final result = await Navigator.of(context).push<Map<Filter, bool>>(
         MaterialPageRoute(
           builder: (ctx) => FiltersScreen(
             onToggleFavourite: _toggleMealFavouriteStatus,
             currentFilters: _selectedFilters,
             availableMeals: _selectedMeals,
+            index: _selectedTile,
           ),
         ),
       );
 
       setState(() {
+        _selectedTile = 0;
         _selectedFilters = result ?? kInitialFilters;
       });
     } else if (identifier == 'Meals') {
@@ -131,7 +135,10 @@ class _TabsScreenState extends State<TabsScreen> {
       appBar: AppBar(
         title: Text(activePageTitle),
       ),
-      drawer: MainDrawer(onSelectMenu: _setScreen),
+      drawer: MainDrawer(
+        onSelectMenu: _setScreen,
+        index: _selectedTile,
+      ),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,

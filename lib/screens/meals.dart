@@ -29,11 +29,11 @@ class MealsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final availablewidth = MediaQuery.of(context).size.width;
+    final availableWidth = MediaQuery.of(context).size.width;
 
     Widget content = ListView.builder(
       itemCount: meals.length,
-      itemExtent: 225,
+      itemExtent: 0.563 * availableWidth,
       itemBuilder: (ctx, index) => MealItem(
         meal: meals[index],
         onSelectMeal: () => _selectMeal(context, meals[index]),
@@ -42,55 +42,84 @@ class MealsScreen extends StatelessWidget {
 
     if (meals.isEmpty) {
       content = Center(
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Text(
-            'Uh oh ... nothing here!',
-            style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Text(
-            'Try selecting a favourite meal!',
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-          ),
-        ]),
-      );
-    } else if (availablewidth >= 1200) {
-      content = GridView(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          childAspectRatio: 16 / 9,
-          crossAxisSpacing: 5,
-          mainAxisSpacing: 5,
-        ),
-        children: [
-          for (final meal in meals)
-            MealItem(
-              meal: meal,
-              onSelectMeal: () => _selectMeal(context, meal),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (title == null)
+              Icon(
+                Icons.star_border_purple500_rounded,
+                size: 100,
+                color: Theme.of(context).colorScheme.secondary,
+              )
+            else
+              Image.asset(
+                'assets/images/empty_flutter.png',
+                width: 150,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+            Text(
+              'Uh oh ... nothing here!',
+              style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
             ),
-        ],
-      );
-    } else if (availablewidth >= 700) {
-      content = GridView(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 16 / 9,
-          crossAxisSpacing: 5,
-          mainAxisSpacing: 5,
-        ),
-        children: [
-          for (final meal in meals)
-            MealItem(
-              meal: meal,
-              onSelectMeal: () => _selectMeal(context, meal),
+            const SizedBox(
+              height: 16,
             ),
-        ],
+            if (title == null)
+              Text(
+                'Try selecting a favourite meal!',
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+              )
+            else
+              Text(
+                'Try selecting a different category!',
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+              ),
+          ],
+        ),
+      );
+    } else if (availableWidth >= 1200) {
+      content = Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: GridView(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            childAspectRatio: 16 / 9,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+          ),
+          children: [
+            for (final meal in meals)
+              MealItem(
+                meal: meal,
+                onSelectMeal: () => _selectMeal(context, meal),
+              ),
+          ],
+        ),
+      );
+    } else if (availableWidth >= 700) {
+      content = Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: GridView(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 16 / 9,
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 5,
+          ),
+          children: [
+            for (final meal in meals)
+              MealItem(
+                meal: meal,
+                onSelectMeal: () => _selectMeal(context, meal),
+              ),
+          ],
+        ),
       );
     }
 

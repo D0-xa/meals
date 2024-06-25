@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 
+import 'package:meals/widgets/drawer_tile.dart';
+
 class MainDrawer extends StatelessWidget {
   const MainDrawer({
     super.key,
     required this.onSelectMenu,
+    required this.index,
   });
 
   final void Function(String identifier) onSelectMenu;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    bool selectedTile1 = index == 0 ? true : false;
+    bool selectedTile2 = false;
+    bool selectedTile3 = index == 1 ? true : false;
+
     return Drawer(
       child: Column(
         children: [
@@ -47,56 +55,29 @@ class MainDrawer extends StatelessWidget {
               ],
             ),
           ),
-          ListTile(
-            leading: Icon(
-              Icons.restaurant_menu,
-              size: 26,
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
-            title: Text(
-              'Cuisine',
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface,
-                    fontSize: 24,
-                  ),
-            ),
-            onTap: () {
+          DrawerTile(
+            title: 'Cuisine',
+            onSelectTile: () {
               onSelectMenu('Cuisine');
             },
+            icon: Icons.restaurant_menu,
+            selected: selectedTile1,
           ),
-          ListTile(
-            leading: Icon(
-              Icons.restaurant_rounded,
-              size: 26,
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
-            title: Text(
-              'Meals',
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface,
-                    fontSize: 24,
-                  ),
-            ),
-            onTap: () {
+          DrawerTile(
+            title: 'Meals',
+            onSelectTile: () {
               onSelectMenu('Meals');
             },
+            icon: Icons.restaurant_rounded,
+            selected: selectedTile2,
           ),
-          ListTile(
-            leading: Icon(
-              Icons.settings,
-              size: 26,
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
-            title: Text(
-              'Filters',
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface,
-                    fontSize: 24,
-                  ),
-            ),
-            onTap: () {
+          DrawerTile(
+            title: 'Filters',
+            onSelectTile: () {
               onSelectMenu('Filters');
             },
+            icon: Icons.settings_outlined,
+            selected: selectedTile3,
           ),
         ],
       ),

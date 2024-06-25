@@ -18,11 +18,13 @@ class FiltersScreen extends StatefulWidget {
     required this.onToggleFavourite,
     required this.currentFilters,
     required this.availableMeals,
+    required this.index,
   });
 
   final void Function(Meal meal) onToggleFavourite;
   final Map<Filter, bool> currentFilters;
   final List<Meal> availableMeals;
+  final int index;
 
   @override
   State<FiltersScreen> createState() => _FiltersScreenState();
@@ -73,28 +75,31 @@ class _FiltersScreenState extends State<FiltersScreen> {
       appBar: AppBar(
         title: const Text('Your Filters'),
       ),
-      drawer: MainDrawer(onSelectMenu: (identifier) {
-        Navigator.of(context).pop();
+      drawer: MainDrawer(
+        onSelectMenu: (identifier) {
+          Navigator.of(context).pop();
 
-        if (identifier == 'Meals') {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (ctx) => MealsScreen(
-                title: 'Meals',
-                meals: widget.availableMeals,
-                onToggleFavourite: widget.onToggleFavourite,
+          if (identifier == 'Meals') {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (ctx) => MealsScreen(
+                  title: 'Meals',
+                  meals: widget.availableMeals,
+                  onToggleFavourite: widget.onToggleFavourite,
+                ),
               ),
-            ),
-          );
-        } else if (identifier == 'Cuisine') {
-          Navigator.of(context).pop({
-            Filter.glutenFree: _glutenFreeFilterSet,
-            Filter.lactoseFree: _lactoseFreeFilterSet,
-            Filter.vegetarian: _vegetarianFilterSet,
-            Filter.vegan: _veganFilterSet,
-          });
-        }
-      }),
+            );
+          } else if (identifier == 'Cuisine') {
+            Navigator.of(context).pop({
+              Filter.glutenFree: _glutenFreeFilterSet,
+              Filter.lactoseFree: _lactoseFreeFilterSet,
+              Filter.vegetarian: _vegetarianFilterSet,
+              Filter.vegan: _veganFilterSet,
+            });
+          }
+        },
+        index: widget.index,
+      ),
       body: PopScope(
         canPop: false,
         onPopInvoked: (didPop) {
