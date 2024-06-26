@@ -5,19 +5,19 @@ class Switches extends StatelessWidget {
     super.key,
     required this.mainLabel,
     required this.subLabel,
-    required this.onOff,
+    required this.onOrOff,
     required this.onSwitched,
   });
 
   final String mainLabel;
   final String subLabel;
-  final bool onOff;
+  final bool onOrOff;
   final void Function(bool newValue) onSwitched;
 
   @override
   Widget build(BuildContext context) {
     return SwitchListTile.adaptive(
-      value: onOff,
+      value: onOrOff,
       onChanged: onSwitched,
       title: Text(
         mainLabel,
