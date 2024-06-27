@@ -15,31 +15,31 @@ class TabsScreen extends ConsumerStatefulWidget {
   ConsumerState<TabsScreen> createState() => _TabsScreenState();
 }
 
-class _TabsScreenState extends ConsumerState<TabsScreen>
-    with SingleTickerProviderStateMixin {
+class _TabsScreenState extends ConsumerState<TabsScreen> {
+  // with SingleTickerProviderStateMixin {
   int _selectedPageIndex = 0;
   int _selectedTile = 0;
-  late AnimationController _animationController;
+  // late AnimationController _animationController;    explicit animation
 
-  @override
-  void initState() {
-    super.initState();
+  // @override
+  // void initState() {
+  //   super.initState();
 
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-      lowerBound: 0,
-      upperBound: 1,
-    );
+  //   _animationController = AnimationController(
+  //     vsync: this,
+  //     duration: const Duration(milliseconds: 500),
+  //     lowerBound: 0,
+  //     upperBound: 1,
+  //   );
 
-    _animationController.forward();
-  }
+  //   _animationController.forward();
+  // }
 
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _animationController.dispose();
+  //   super.dispose();
+  // }
 
   void _selectPage(int index) {
     setState(() {
