@@ -77,7 +77,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
 
   Route<int> _createRoute(Widget screen) {
     return PageRouteBuilder(
-      transitionDuration: Durations.extralong2,
+      transitionDuration: Durations.extralong1,
       pageBuilder: (context, animation, secondaryAnimation) => screen,
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
           SlideTransition(

@@ -29,7 +29,7 @@ class FiltersScreen extends ConsumerWidget {
           if (identifier == 'Meals') {
             Navigator.of(context).push(
               PageRouteBuilder(
-                transitionDuration: Durations.extralong2,
+                transitionDuration: Durations.extralong1,
                 pageBuilder: (context, animation, secondaryAnimation) =>
                     MealsScreen(
                   title: 'Meals',
