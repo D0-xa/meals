@@ -41,8 +41,22 @@ class MealDetailsScreen extends ConsumerWidget {
                 ),
               );
             },
-            icon: Icon(
-                isFavourite ? Icons.star_outlined : Icons.star_border_outlined),
+            icon: AnimatedSwitcher(
+              duration: Durations.medium2,
+              transitionBuilder: (child, animation) {
+                return RotationTransition(
+                  turns: Tween(
+                    begin: 0.8,
+                    end: 1.0,
+                  ).animate(animation),
+                  child: child,
+                );
+              },
+              child: Icon(
+                isFavourite ? Icons.star_outlined : Icons.star_border_outlined,
+                key: ValueKey(isFavourite),
+              ),
+            ),
           )
         ],
       ),
@@ -63,11 +77,15 @@ class MealDetailsScreen extends ConsumerWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          child: Image.network(
-                            meal.imageUrl,
-                            width: 0.45 * availableWidth,
-                            height: 0.253 * availableWidth,
-                            fit: BoxFit.cover,
+                          child: Hero(
+                            tag: meal.id,
+                            transitionOnUserGestures: true,
+                            child: Image.network(
+                              meal.imageUrl,
+                              width: 0.45 * availableWidth,
+                              height: 0.253 * availableWidth,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                         const SizedBox(
@@ -133,20 +151,28 @@ class MealDetailsScreen extends ConsumerWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Image.network(
-                        meal.imageUrl,
-                        width: 0.65 * availableWidth,
-                        height: 0.366 * availableWidth,
-                        fit: BoxFit.cover,
+                      child: Hero(
+                        tag: meal.id,
+                        transitionOnUserGestures: true,
+                        child: Image.network(
+                          meal.imageUrl,
+                          width: 0.65 * availableWidth,
+                          height: 0.366 * availableWidth,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   )
                 else
-                  Image.network(
-                    meal.imageUrl,
-                    width: double.infinity,
-                    height: 0.563 * availableWidth,
-                    fit: BoxFit.cover,
+                  Hero(
+                    tag: meal.id,
+                    transitionOnUserGestures: true,
+                    child: Image.network(
+                      meal.imageUrl,
+                      width: double.infinity,
+                      height: 0.6 * availableWidth,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 if (availableWidth < 1200)
                   Column(

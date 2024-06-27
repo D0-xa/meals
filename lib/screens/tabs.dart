@@ -15,9 +15,31 @@ class TabsScreen extends ConsumerStatefulWidget {
   ConsumerState<TabsScreen> createState() => _TabsScreenState();
 }
 
-class _TabsScreenState extends ConsumerState<TabsScreen> {
+class _TabsScreenState extends ConsumerState<TabsScreen>
+    with SingleTickerProviderStateMixin {
   int _selectedPageIndex = 0;
   int _selectedTile = 0;
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+      lowerBound: 0,
+      upperBound: 1,
+    );
+
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   void _selectPage(int index) {
     setState(() {
@@ -31,8 +53,8 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     if (identifier == 'Filters') {
       _selectedTile = 1;
       final value = await Navigator.of(context).push<int>(
-        MaterialPageRoute(
-          builder: (ctx) => FiltersScreen(
+        _createRoute(
+          FiltersScreen(
             index: _selectedTile,
           ),
         ),
@@ -43,8 +65,8 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
       });
     } else if (identifier == 'Meals') {
       Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (ctx) => MealsScreen(
+        _createRoute(
+          MealsScreen(
             title: 'Meals',
             meals: ref.watch(filteredMealsProvider),
           ),
@@ -53,10 +75,28 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     }
   }
 
+  Route<int> _createRoute(Widget screen) {
+    return PageRouteBuilder(
+      transitionDuration: Durations.extralong2,
+      pageBuilder: (context, animation, secondaryAnimation) => screen,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          SlideTransition(
+        position: animation.drive(
+          Tween(
+            begin: const Offset(1, 0),
+            end: Offset.zero,
+          ).chain(
+            CurveTween(curve: Curves.easeInOut),
+          ),
+        ),
+        child: child,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final availableMeals = ref.watch(filteredMealsProvider);
-
     Widget activePage = CategoriesScreen(
       availableMeals: availableMeals,
     );

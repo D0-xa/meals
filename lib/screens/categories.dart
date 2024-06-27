@@ -20,10 +20,23 @@ class CategoriesScreen extends StatelessWidget {
         .toList();
 
     Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (ctx) => MealsScreen(
+      PageRouteBuilder(
+        transitionDuration: Durations.extralong2,
+        pageBuilder: (context, animation, secondaryAnimation) => MealsScreen(
           title: category.title,
           meals: filteredMeals,
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            SlideTransition(
+          position: animation.drive(
+            Tween(
+              begin: const Offset(1, 0),
+              end: Offset.zero,
+            ).chain(
+              CurveTween(curve: Curves.easeInOut),
+            ),
+          ),
+          child: child,
         ),
       ),
     ); // Navigator.push(context, route)

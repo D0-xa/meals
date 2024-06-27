@@ -14,10 +14,6 @@ class MainDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool selectedTile1 = index == 0 ? true : false;
-    bool selectedTile2 = false;
-    bool selectedTile3 = index == 1 ? true : false;
-
     return Drawer(
       child: Column(
         children: [
@@ -61,7 +57,7 @@ class MainDrawer extends StatelessWidget {
               onSelectMenu('Cuisine');
             },
             icon: Icons.restaurant_menu,
-            selected: selectedTile1,
+            selected: index == 0 ? true : false,
           ),
           DrawerTile(
             title: 'Meals',
@@ -69,7 +65,7 @@ class MainDrawer extends StatelessWidget {
               onSelectMenu('Meals');
             },
             icon: Icons.restaurant_rounded,
-            selected: selectedTile2,
+            selected: false,
           ),
           DrawerTile(
             title: 'Filters',
@@ -77,7 +73,7 @@ class MainDrawer extends StatelessWidget {
               onSelectMenu('Filters');
             },
             icon: Icons.settings_outlined,
-            selected: selectedTile3,
+            selected: index == 1 ? true : false,
           ),
         ],
       ),

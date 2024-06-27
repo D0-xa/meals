@@ -44,8 +44,8 @@ class MealsScreen extends StatelessWidget {
           children: [
             if (title == null)
               Icon(
-                Icons.star_border_purple500_rounded,
-                size: 100,
+                Icons.stars,
+                size: 80,
                 color: Theme.of(context).colorScheme.secondary,
               )
             else

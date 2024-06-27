@@ -17,6 +17,7 @@ class FiltersScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentFilters = ref.watch(filtersProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Filters'),
@@ -27,10 +28,25 @@ class FiltersScreen extends ConsumerWidget {
 
           if (identifier == 'Meals') {
             Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (ctx) => MealsScreen(
+              PageRouteBuilder(
+                transitionDuration: Durations.extralong2,
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    MealsScreen(
                   title: 'Meals',
                   meals: ref.watch(filteredMealsProvider),
+                ),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) =>
+                        SlideTransition(
+                  position: animation.drive(
+                    Tween(
+                      begin: const Offset(1, 0),
+                      end: Offset.zero,
+                    ).chain(
+                      CurveTween(curve: Curves.easeInOut),
+                    ),
+                  ),
+                  child: child,
                 ),
               ),
             );
