@@ -13,6 +13,12 @@ final kDarkColorScheme = ColorScheme.fromSeed(
   seedColor: const Color.fromARGB(255, 131, 57, 0),
 );
 
+const pageTransition =
+    PageTransitionsTheme(builders: <TargetPlatform, PageTransitionsBuilder>{
+  TargetPlatform.android: ZoomPageTransitionsBuilder(),
+  TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+});
+
 void main() {
   runApp(
     const ProviderScope(
@@ -35,6 +41,7 @@ class App extends StatelessWidget {
           color: kColorScheme.onSecondary,
         ),
         textTheme: GoogleFonts.latoTextTheme(),
+        pageTransitionsTheme: pageTransition,
       ),
       darkTheme: ThemeData(
         useMaterial3: true,
@@ -43,6 +50,7 @@ class App extends StatelessWidget {
           color: kDarkColorScheme.onSecondary,
         ),
         textTheme: GoogleFonts.latoTextTheme(),
+        pageTransitionsTheme: pageTransition,
       ),
       home: const TabsScreen(),
     );

@@ -18,7 +18,6 @@ class TabsScreen extends ConsumerStatefulWidget {
 class _TabsScreenState extends ConsumerState<TabsScreen> {
   // with SingleTickerProviderStateMixin {
   int _selectedPageIndex = 0;
-  int _selectedTile = 0;
   // late AnimationController _animationController;    explicit animation
 
   // @override
@@ -47,22 +46,13 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     });
   }
 
-  void _setScreen(String identifier) async {
-    Navigator.of(context).pop();
-
+  void _setScreen(String identifier) {
     if (identifier == 'Filters') {
-      _selectedTile = 1;
-      final value = await Navigator.of(context).push<int>(
+      Navigator.of(context).push(
         _createRoute(
-          FiltersScreen(
-            index: _selectedTile,
-          ),
+          const FiltersScreen(),
         ),
       );
-
-      setState(() {
-        _selectedTile = value ?? 1;
-      });
     } else if (identifier == 'Meals') {
       Navigator.of(context).push(
         _createRoute(
@@ -75,9 +65,10 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     }
   }
 
-  Route<int> _createRoute(Widget screen) {
+  Route _createRoute(Widget screen) {
     return PageRouteBuilder(
-      transitionDuration: Durations.extralong1,
+      transitionDuration: Durations.long4,
+      reverseTransitionDuration: Durations.long4,
       pageBuilder: (context, animation, secondaryAnimation) => screen,
       transitionsBuilder: (context, animation, secondaryAnimation, child) =>
           SlideTransition(
@@ -114,10 +105,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
       appBar: AppBar(
         title: Text(activePageTitle),
       ),
-      drawer: MainDrawer(
-        onSelectMenu: _setScreen,
-        index: _selectedTile,
-      ),
+      drawer: MainDrawer(onSelectMenu: _setScreen),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,

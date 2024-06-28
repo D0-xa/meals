@@ -21,7 +21,8 @@ class CategoriesScreen extends StatelessWidget {
 
     Navigator.of(context).push(
       PageRouteBuilder(
-        transitionDuration: Durations.extralong1,
+        transitionDuration: Durations.long4,
+        reverseTransitionDuration: Durations.long4,
         pageBuilder: (context, animation, secondaryAnimation) => MealsScreen(
           title: category.title,
           meals: filteredMeals,

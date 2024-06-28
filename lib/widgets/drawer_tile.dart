@@ -6,13 +6,11 @@ class DrawerTile extends StatelessWidget {
     required this.title,
     required this.onSelectTile,
     required this.icon,
-    required this.selected,
   });
 
   final String title;
   final void Function() onSelectTile;
   final IconData icon;
-  final bool selected;
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +39,6 @@ class DrawerTile extends StatelessWidget {
             topRight: Radius.circular(35),
           ),
         ),
-        selected: selected,
-        selectedColor: Theme.of(context).colorScheme.onPrimaryContainer,
-        selectedTileColor: Theme.of(context).colorScheme.onPrimary,
         onTap: onSelectTile,
       ),
     );
